@@ -74,6 +74,14 @@ function showUserOnScreen(obj){
         }
     }   
 
+    // edit event
+    edtBtn.onclick = () =>{
+        userList.removeChild(li);
+        axios.delete('https://crudcrud.com/api/b41160336665488fa337332ff67f45d7/appointmentData/'+obj._id);
+        nameInput.value = obj.name;
+        emailInput.value = obj.email;
+    }
+
     li.appendChild(delBtn);
     li.appendChild(edtBtn);
     userList.appendChild(li);
