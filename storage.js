@@ -8,6 +8,19 @@ const userList = document.querySelector('#users');
 
 myForm.addEventListener('submit', onSubmit);
 
+window.addEventListener('DOMContentLoaded', () => {
+    axios.get('https://crudcrud.com/api/b41160336665488fa337332ff67f45d7/appointmentData')
+    .then((response) => {
+        for(userObj of response.data){
+            showUserOnScreen(userObj);
+        }
+    })
+    .catch(err => {
+        document.body.innerHTML += 'Error: Something went wrong!!!!';
+        console.log(err);
+    })
+})
+
 function onSubmit(e){
     e.preventDefault();
     if(nameInput.value === '' || emailInput.value === ''){
@@ -23,10 +36,12 @@ function onSubmit(e){
         }
         axios.post('https://crudcrud.com/api/b41160336665488fa337332ff67f45d7/appointmentData', userObj)
         .then((response) => {
-            console.log(response);
+            showUserOnScreen(response.data);
         })
-        .catch(err => console.log(err));
-        showUserOnScreen(userObj);
+        .catch(err => {
+            document.body.innerHTML += 'Error: Something went wrong!!!!';
+            console.log(err)
+        });
 
         nameInput.value = '';
         emailInput.value = '';

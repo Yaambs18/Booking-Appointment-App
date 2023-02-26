@@ -17,14 +17,14 @@
   
   ul li {
     padding: 5px;
-    background: #b4afaf69;
+    background: #293c70d2;
     margin: 5px 0;
     border-radius: 10px;
     color: rgb(229, 241, 118);
   }
   
   header {
-    background: #ddd8d8;
+    background: #a39a9a60;
     padding: 1rem;
     text-align: center;
   }
@@ -39,7 +39,7 @@
   #my-form {
     padding: 2rem;
     border-radius: 10px;
-    border: solid #82f161 5px;
+    border: solid #99f77c 5px;
   }
   
   #my-form label {
