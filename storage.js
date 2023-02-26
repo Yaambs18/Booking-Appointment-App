@@ -16,7 +16,7 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     })
     .catch(err => {
-        document.body.innerHTML += 'Error: Something went wrong!!!!';
+        myForm.innerHTML = '<h1>Error: Something went wrong!!!!</h1>';
         console.log(err);
     })
 })
@@ -64,6 +64,15 @@ function showUserOnScreen(obj){
     edtBtn.className = 'edit';
     var edtText = document.createTextNode('Edit');
     edtBtn.appendChild(edtText);
+
+    
+    // delete event
+    delBtn.onclick = () =>{
+        if(confirm('Are you sure ?')){
+            userList.removeChild(li);
+            axios.delete('https://crudcrud.com/api/b41160336665488fa337332ff67f45d7/appointmentData/'+obj._id);
+        }
+    }   
 
     li.appendChild(delBtn);
     li.appendChild(edtBtn);
