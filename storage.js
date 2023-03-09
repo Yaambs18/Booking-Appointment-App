@@ -9,7 +9,7 @@ const userList = document.querySelector('#users');
 myForm.addEventListener('submit', onSubmit);
 
 window.addEventListener('DOMContentLoaded', () => {
-    axios.get('https://crudcrud.com/api/b41160336665488fa337332ff67f45d7/appointmentData')
+    axios.get('http://localhost:3000/appointmentData')
     .then((response) => {
         for(userObj of response.data){
             showUserOnScreen(userObj);
@@ -34,14 +34,29 @@ function onSubmit(e){
             name : nameInput.value,
             email : emailInput.value
         }
-        axios.post('https://crudcrud.com/api/b41160336665488fa337332ff67f45d7/appointmentData', userObj)
-        .then((response) => {
-            showUserOnScreen(response.data);
-        })
-        .catch(err => {
-            document.body.innerHTML += 'Error: Something went wrong!!!!';
-            console.log(err)
-        });
+        if(document.querySelector('.btn').value === 'Update'){
+            const userId = document.querySelector('#userId').value;
+            axios
+              .put('http://localhost:3000/appointmentData/'+userId, userObj)
+              .then((response) => {
+                showUserOnScreen(response.data);
+              })
+              .catch((err) => {
+                document.body.innerHTML += "Error: Something went wrong!!!!";
+                console.log(err);
+              });
+
+        }
+        else{
+            axios.post('http://localhost:3000/appointmentData', userObj)
+            .then((response) => {
+                showUserOnScreen(response.data);
+            })
+            .catch(err => {
+                document.body.innerHTML += 'Error: Something went wrong!!!!';
+                console.log(err)
+            });
+        }
 
         nameInput.value = '';
         emailInput.value = '';
@@ -70,16 +85,21 @@ function showUserOnScreen(obj){
     delBtn.onclick = () =>{
         if(confirm('Are you sure ?')){
             userList.removeChild(li);
-            axios.delete('https://crudcrud.com/api/b41160336665488fa337332ff67f45d7/appointmentData/'+obj._id);
+            axios.delete('http://localhost:3000/appointmentData/'+obj.id);
         }
     }   
 
     // edit event
     edtBtn.onclick = () =>{
         userList.removeChild(li);
-        axios.delete('https://crudcrud.com/api/b41160336665488fa337332ff67f45d7/appointmentData/'+obj._id);
         nameInput.value = obj.name;
         emailInput.value = obj.email;
+        const idElem = document.createElement('input');
+        idElem.type = 'hidden';
+        idElem.id = 'userId';
+        idElem.value = obj.id;
+        myForm.children[4].value = 'Update';
+        myForm.appendChild(idElem);
     }
 
     li.appendChild(delBtn);
